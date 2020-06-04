@@ -1,0 +1,32 @@
+{
+  "name": "easy-vue-calendar",
+  "version": "0.1.0",
+  "private": false,
+  "main": "./dist/easyVueCalendar.common.js",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build:npm": "vue-cli-service build --target lib --name easyVueCalendar src/index.js",
+    "build:stats": "vue-cli-service build --target lib --name easyVueCalendar src/index.js --report-json",
+    "deploy:github": "node scripts/gh-pages-deploy.js"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "moment": "^2.26.0",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.4.0",
+    "@vue/cli-service": "~4.4.0",
+    "vue-template-compiler": "^2.6.11",
+    "execa": "latest"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "files": [
+    "dist/*"
+  ]
+}
