@@ -2,5 +2,8 @@ module.exports = {
     css: {
         extract: false
     },
-    publicPath: '/easy-vue-calendar/'
+    publicPath: process.env.NODE_ENV === 'production'
+    ? '/easy-vue-calendar/'
+    : '/'
 }
+
