@@ -18,13 +18,13 @@
               <div class="container-day">
                   <span 
                     :class="day == toDay.format('DD') && dataSerach.split('-')[1] == toDay.format('MM') && dataSerach.split('-')[0] == toDay.format('YYYY') ? 'toDay' : ''"
-                    @click="dayClick(`${dataSerach.split('-')[0]}-${dataSerach.split('-')[1]}-${pad_with_zeroes(day, 2)}`)"
+                    @click="dayClick(`${dataSerach.split('-')[0]}-${dataSerach.split('-')[1]}-${Math.abs(pad_with_zeroes(day, 2))}`)"
                   >
                     {{ pad_with_zeroes(day, 2) }}
                   </span>
                   <button 
                     class="calendar-btn-plus calendar-btn-primary"
-                    v-if="parseInt(day) > 0" 
+                    v-if="parseInt(day) > 0"
                     @click="dayClick(`${dataSerach.split('-')[0]}-${dataSerach.split('-')[1]}-${pad_with_zeroes(day, 2)}`)"
                   >
                     +
