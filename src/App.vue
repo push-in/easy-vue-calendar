@@ -43,7 +43,6 @@ export default {
       this.example = {}
       this.example.title = 'Day Clicked'
       this.example.event = $event
-      console.log($event)
     },
     itemClicked ($event) {
       this.example = {}
