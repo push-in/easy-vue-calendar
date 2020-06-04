@@ -1,6 +1,11 @@
 {
   "name": "easy-vue-calendar",
-  "version": "0.1.0",
+  "author": {
+    "name": "David William Balbino",
+    "email": "davidwilliambalbino@gmail.com",
+    "url": "https://pushin.com.br"
+  },
+  "version": "0.1.1",
   "private": false,
   "main": "./dist/easyVueCalendar.common.js",
   "scripts": {
@@ -9,6 +14,11 @@
     "build:npm": "vue-cli-service build --target lib --name easyVueCalendar src/index.js",
     "build:stats": "vue-cli-service build --target lib --name easyVueCalendar src/index.js --report-json",
     "deploy:github": "node scripts/gh-pages-deploy.js"
+  },
+  "homepage": "https://push-in.github.io/easy-vue-calendar/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/push-in/easy-vue-calendar"
   },
   "dependencies": {
     "core-js": "^3.6.5",
