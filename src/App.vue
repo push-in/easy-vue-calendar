@@ -8,6 +8,11 @@
       @itemClicked="itemClicked"
       @prevMonthClicked="prevMonthClicked"
       @nextMonthClicked="nextMonthClicked"
+      :showButtonsHeader="true"
+      textButtonNext="Next"
+      textButtonPrev="Prev"
+      :weeks="weeks"
+      :months="months"
     />
   </div>
 </template>
@@ -29,13 +34,15 @@ export default {
           day: '2020-06-10'
         }
       ],
+      weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       example: {}
     }
   },
   methods: {
     add () {
       this.items.push({
-        title: "Teste",
+        title: "Test",
         day: moment().set('date', 20).format('YYYY-MM-DD')
       })
     },
@@ -58,12 +65,6 @@ export default {
       this.example = {}
       this.example.title = 'Next month Clicked'
       this.example.event = $event
-    }
-  },
-
-  computed: {
-    getExample: function () {
-      
     }
   }
 }

@@ -1,15 +1,14 @@
 <template>
     <div class="container">
-      <v-progress-linear :indeterminate="true" v-if="isLoading"></v-progress-linear>
       <div class="header-calendar">
-        <div class="control-calendar"><button class="calendar-button ripple calendar-btn-primary" @click="prevMonth()">Anterior</button></div>
+        <div class="control-calendar left" v-if="showButtonsHeader"><button class="calendar-button ripple calendar-btn-primary" @click="prevMonth()">{{ textButtonPrev }}</button></div>
         <div class="control-calendar center"> {{ getNameMonth() }} {{ dataSerach.split('-')[0] }} </div>
-        <div class="control-calendar"><button class="calendar-button ripple calendar-btn-primary" @click="nextMonth()">Próximo</button></div>
+        <div class="control-calendar right" v-if="showButtonsHeader"><button class="calendar-button ripple calendar-btn-primary" @click="nextMonth()">{{ textButtonNext }}</button></div>
       </div>
       <div class="calendar">
         <div class="container-calendar">
           <div class="header-week">
-              <div class="col-week-name" v-for="(week, i) in weeksMini" :key="i">
+              <div class="col-week-name" v-for="(week, i) in weeks" :key="i">
                 {{ week }}
               </div>
           </div>
@@ -60,14 +59,31 @@ export default {
     items: {
       default: () => [],
       type: Array
+    },
+    weeks: {
+      type: Array,
+      default: () => (['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])
+    },
+    months: {
+      type: Array,
+      default: () => (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
+    },
+    textButtonPrev: {
+      default: 'Prev',
+      type: String
+    },
+    textButtonNext: {
+      default: 'Next',
+      type: String
+    },
+    showButtonsHeader: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
     return {
       days: [],
-      weeks: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-      weeksMini: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-      meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
       toDay: moment(),
       dataSerach: moment().format('YYYY-MM-DD'),
       menu: false,
@@ -97,7 +113,7 @@ export default {
       this.days = getAllDays(moment(this.dataSerach).format('YYYY'), moment(this.dataSerach).format('MM'))
     },
     getNameMonth () {
-      return this.meses[parseInt(moment(this.dataSerach).format('MM')) - 1]
+      return this.months[parseInt(moment(this.dataSerach).format('MM')) - 1]
     },
     async prevMonth () {
       this.dataSerach =  moment(this.dataSerach).add(-1, 'M').format('YYYY-MM-DD')
@@ -197,8 +213,20 @@ export default {
     box-sizing: border-box;
   }
 
+  .control-calendar {
+    flex: 1
+  }
+
   .center {
     text-align: center
+  }
+
+  .right {
+    text-align: right
+  }
+
+  .left {
+    text-align: left
   }
 
   .toDay {
