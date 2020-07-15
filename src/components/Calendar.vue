@@ -1,53 +1,53 @@
 <template>
-    <div class="container">
-      <div class="header-calendar">
-        <div class="control-calendar left" v-if="showButtonsHeader"><button class="calendar-button ripple calendar-btn-primary" @click="prevMonth()">{{ textButtonPrev }}</button></div>
-        <div class="control-calendar center"> {{ getNameMonth() }} {{ dataSerach.split('-')[0] }} </div>
-        <div class="control-calendar right" v-if="showButtonsHeader"><button class="calendar-button ripple calendar-btn-primary" @click="nextMonth()">{{ textButtonNext }}</button></div>
-      </div>
-      <div class="calendar">
-        <div class="container-calendar">
-          <div class="header-week">
-              <div class="col-week-name" v-for="(week, i) in weeks" :key="i">
-                {{ week }}
-              </div>
-          </div>
-          <div class="row-week" v-for="(week, index) in days" :key="index">
-            <div class="col-day" v-for="(day, indexDay) in week" :key="indexDay">
-              <div class="container-day">
-                  <span 
-                    :class="day == toDay.format('DD') && dataSerach.split('-')[1] == toDay.format('MM') && dataSerach.split('-')[0] == toDay.format('YYYY') ? 'toDay' : ''"
-                    @click="dayClick(`${dataSerach.split('-')[0]}-${dataSerach.split('-')[1]}-${pad_with_zeroes(Math.abs(day), 2)}`)"
-                  >
-                    {{ pad_with_zeroes(day, 2) }}
-                  </span>
-                  <button 
-                    class="calendar-btn-plus calendar-btn-primary"
-                    v-if="parseInt(day) > 0"
-                    @click="dayClick(`${dataSerach.split('-')[0]}-${dataSerach.split('-')[1]}-${pad_with_zeroes(day, 2)}`)"
-                  >
-                    +
-                  </button>
-              </div>
-              <div class="item-container">
-                <div
-                  v-for="(item, indexItem) in getItemsInDay(day)"
-                  :key="indexItem"
-                  class="chipItem"
-                  @click="itemClicked(item)"
-                  :style="`
-                    ${item.background ? 'background-color: ' + item.background + ';' : ''}
-                    ${item.color ? 'color: ' + item.color + ';' : ''}
-                  `"
+  <div class="container">
+    <div class="header-calendar">
+      <div class="control-calendar left" v-if="showButtonsHeader"><button class="calendar-button ripple calendar-btn-primary" @click="prevMonth()">{{ textButtonPrev }}</button></div>
+      <div class="control-calendar center"> {{ getNameMonth() }} {{ dataSerach.split('-')[0] }} </div>
+      <div class="control-calendar right" v-if="showButtonsHeader"><button class="calendar-button ripple calendar-btn-primary" @click="nextMonth()">{{ textButtonNext }}</button></div>
+    </div>
+    <div class="calendar">
+      <div class="container-calendar">
+        <div class="header-week">
+            <div class="col-week-name" v-for="(week, i) in weeks" :key="i">
+              {{ week }}
+            </div>
+        </div>
+        <div class="row-week" v-for="(week, index) in days" :key="index">
+          <div class="col-day" v-for="(day, indexDay) in week" :key="indexDay">
+            <div class="container-day" v-if="parseInt(day) > 0">
+                <span
+                  :class="day == toDay.format('DD') && dataSerach.split('-')[1] == toDay.format('MM') && dataSerach.split('-')[0] == toDay.format('YYYY') ? 'toDay' : ''"
+                  @click="dayClick(`${dataSerach.split('-')[0]}-${dataSerach.split('-')[1]}-${pad_with_zeroes(Math.abs(day), 2)}`)"
                 >
-                  {{ item.title }}
-                </div>
+                  {{ pad_with_zeroes(day, 2) }}
+                </span>
+                <button
+                  class="calendar-btn-plus calendar-btn-primary"
+                  v-if="parseInt(day) > 0 && showButtonAdd"
+                  @click="dayClick(`${dataSerach.split('-')[0]}-${dataSerach.split('-')[1]}-${pad_with_zeroes(day, 2)}`)"
+                >
+                  +
+                </button>
+            </div>
+            <div class="item-container">
+              <div
+                v-for="(item, indexItem) in getItemsInDay(day)"
+                :key="indexItem"
+                class="chipItem"
+                @click="itemClicked(item)"
+                :style="`
+                  ${item.background ? 'background-color: ' + item.background + ';' : ''}
+                  ${item.color ? 'color: ' + item.color + ';' : ''}
+                `"
+              >
+                {{ item.title }}
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -77,6 +77,10 @@ export default {
       type: String
     },
     showButtonsHeader: {
+      type: Boolean,
+      default: true
+    },
+    showButtonAdd: {
       type: Boolean,
       default: true
     }
@@ -144,7 +148,7 @@ export default {
     },
     getItemsInDay (day) {
       return this.items.filter(i => moment(i.day).format('YYYY-MM-DD') == moment(this.dataSerach).set('date', day).format('YYYY-MM-DD'))
-    }
+    },
   },
   mounted() {
     this.getMonth()
