@@ -109,3 +109,57 @@ Items are the events that can be passed to the calendar. It is an array type and
     }
 </script>
 ```
+
+## Props
+
+| Name | Type | Default |
+| --- | --- | --- |
+| items | array | [] |
+| showButtonsHeader | boolean | true |
+| showButtonAdd | boolean | true |
+| weeks | array | ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] |
+| months | array | ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] |
+
+
+
+## Events
+
+| Name | Return |
+| --- | --- |
+| dayClicked | an object as long as the day clicked |
+| itemClicked | an object containing the title and day of the item clicked |
+| prevMonthClicked | a json object with the start date and end date shown on the calendar |
+| nextMonthClicked | a json object with the start date and end date shown on the calendar |
+
+## API
+
+```
+<template>
+    <EasyCalendar 
+      ...
+      ref="calendar"
+    />
+
+
+</template>
+
+<script>
+    import EasyCalendar from 'easy-vue-calendar'
+    export default {
+        name: 'App',
+        components: {
+            EasyCalendar
+        },
+        ...
+
+        methods: {
+            nextMonth () {
+                this.$refs.calendar.nextMonth() // <--- change next month
+            },
+            prevMonth () {
+                this.$refs.calendar.prevMonth() // <--- change prev month
+            }
+        }
+    }
+</script>
+```
