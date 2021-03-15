@@ -22,6 +22,9 @@
       :weeks="weeks"
       :months="months"
       ref="calendar"
+      :disabledDays="disabledDays"
+      :minimalist="false"
+      v-model="daySelected"
     />
   </div>
 </template>
@@ -40,12 +43,15 @@ export default {
       items: [
         {
           title: 'teste',
-          day: '2020-06-10'
+          day: '2021-03-20'
         }
       ],
       weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      example: {}
+      example: {},
+
+      disabledDays: ["2021-03-20", "2021-03-10"],
+      daySelected: '2020-03-15'
     }
   },
   methods: {

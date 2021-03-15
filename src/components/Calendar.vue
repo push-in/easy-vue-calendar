@@ -13,18 +13,21 @@
             </div>
         </div>
         <div class="row-week" v-for="(week, index) in days" :key="index">
-          <div class="col-day" v-for="(day, indexDay) in week" :key="indexDay">
-            <div class="container-day" v-if="parseInt(day) > 0">
+          <div
+            :class="`col-day ${parseInt(day) < 0 ? 'dazzledDay' : ''} ${checkDisabled(day) ? 'disabledDay' : ''}`"
+            v-for="(day, indexDay) in week" :key="indexDay"
+          >
+            <div :class="`container-day`" v-if="parseInt(day) > 0">
                 <span
-                  :class="day == toDay.format('DD') && dataSerach.split('-')[1] == toDay.format('MM') && dataSerach.split('-')[0] == toDay.format('YYYY') ? 'toDay' : ''"
-                  @click="dayClick(`${dataSerach.split('-')[0]}-${dataSerach.split('-')[1]}-${pad_with_zeroes(Math.abs(day), 2)}`)"
+                  :class="`${getFullDay(day) == value ? 'toDay' : ''} day`"
+                  @click="dayClick(day)"
                 >
                   {{ pad_with_zeroes(day, 2) }}
                 </span>
                 <button
                   class="calendar-btn-plus calendar-btn-primary"
-                  v-if="parseInt(day) > 0 && showButtonAdd"
-                  @click="dayClick(`${dataSerach.split('-')[0]}-${dataSerach.split('-')[1]}-${pad_with_zeroes(day, 2)}`)"
+                  v-if="parseInt(day) > 0 && showButtonAdd && !checkDisabled(day) && !minimalist"
+                  @click="dayClick(day)"
                 >
                   +
                 </button>
@@ -56,6 +59,9 @@ import * as getAllDays from './../helpers/getAllDays'
 export default {
   name: 'EasyVueCalendar',
   props: {
+    value: {
+      default: moment().format('YYYY-MM-DD')
+    },
     items: {
       default: () => [],
       type: Array
@@ -83,6 +89,16 @@ export default {
     showButtonAdd: {
       type: Boolean,
       default: true
+    },
+
+    disabledDays: {
+      type: Array,
+      default: () => []
+    },
+
+    minimalist: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -131,8 +147,16 @@ export default {
       this.$emit('nextMonthClicked', this.getRangeDates())
     },
     dayClick (day) {
-      this.$emit('dayClicked', day)
+      if (this.checkDisabled(day)) return
+
+      this.$emit('dayClicked', this.getFullDay(day))
+      this.$emit('input',this.getFullDay(day))
     },
+
+    getFullDay (day) {
+      return `${this.dataSerach.split('-')[0]}-${this.dataSerach.split('-')[1]}-${this.pad_with_zeroes(Math.abs(day), 2)}`
+    },
+
     itemClicked(item) {
       this.$emit('itemClicked', item)
     },
@@ -149,6 +173,10 @@ export default {
     getItemsInDay (day) {
       return this.items.filter(i => moment(i.day).format('YYYY-MM-DD') == moment(this.dataSerach).set('date', day).format('YYYY-MM-DD'))
     },
+
+    checkDisabled (day) {
+      return this.disabledDays.includes(this.getFullDay(day))
+    }
   },
   mounted() {
     this.getMonth()
@@ -191,6 +219,20 @@ export default {
     border-right: #e0e0e0 1px solid;
     overflow: hidden;
     min-height: 100px;
+  }
+
+  .dazzledDay {
+    background-color: #fcf3f3;
+    color: #666;
+  }
+
+  .disabledDay {
+    background-color: #fcf3f3;
+    color: #666;
+  }
+
+  .day:hover {
+    cursor: pointer;
   }
 
   .col-week-name{
