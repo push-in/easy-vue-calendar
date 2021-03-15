@@ -14,6 +14,7 @@ npm i --save easy-vue-calendar
       @itemClicked="itemClicked"
       @prevMonthClicked="prevMonthClicked"
       @nextMonthClicked="nextMonthClicked"
+      v-model="daySelected"
     />
 </template>
 
@@ -33,7 +34,8 @@ npm i --save easy-vue-calendar
                         color: '#FFF',
                         // Other data...
                     }
-                ]
+                ],
+                daySelected: '2020-03-15'
             }
         },
         methods: {
@@ -112,14 +114,15 @@ Items are the events that can be passed to the calendar. It is an array type and
 
 ## Props
 
-| Name | Type | Default |
-| --- | --- | --- |
+| Name | Type | Default | Example
+| --- | --- | --- | --- |
 | items | array | [] |
 | showButtonsHeader | boolean | true |
 | showButtonAdd | boolean | true |
 | weeks | array | ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] |
 | months | array | ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] |
-
+| minimalist | boolean | false |
+| disabledDays | array | [] | ["2021-03-20", "2021-03-10"] |
 
 
 ## Events
