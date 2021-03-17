@@ -5,7 +5,7 @@
     "email": "davidwilliambalbino@gmail.com",
     "url": "https://pushin.com.br"
   },
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": false,
   "main": "./dist/easyVueCalendar.common.js",
   "scripts": {
@@ -21,7 +21,6 @@
     "url": "https://github.com/push-in/easy-vue-calendar"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
     "moment": "^2.26.0",
     "vue": "^2.6.11"
   },
