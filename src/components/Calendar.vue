@@ -54,13 +54,13 @@
 </template>
 
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs'
 import * as getAllDays from './../helpers/getAllDays'
 export default {
   name: 'EasyVueCalendar',
   props: {
     value: {
-      default: moment().format('YYYY-MM-DD')
+      default: dayjs().format('YYYY-MM-DD')
     },
     items: {
       default: () => [],
@@ -104,8 +104,8 @@ export default {
   data () {
     return {
       days: [],
-      toDay: moment(),
-      dataSerach: moment().format('YYYY-MM-DD'),
+      toDay: dayjs(),
+      dataSerach: dayjs().format('YYYY-MM-DD'),
       menu: false,
       errors: {},
     }
@@ -115,34 +115,34 @@ export default {
       const initDay = this.days[0][0]
       let rangeDate = {}
       if (parseInt(initDay) < 0) {
-        rangeDate.dateStart = moment(this.dataSerach).add(-1, 'M').set('date', Math.abs(initDay)).format('YYYY-MM-DD')
+        rangeDate.dateStart = dayjs(this.dataSerach).add(-1, 'M').set('date', Math.abs(initDay)).format('YYYY-MM-DD')
       } else {
-        rangeDate.dateStart = moment(this.dataSerach).set('date', Math.abs(initDay)).format('YYYY-MM-DD')
+        rangeDate.dateStart = dayjs(this.dataSerach).set('date', Math.abs(initDay)).format('YYYY-MM-DD')
       }
 
       const dateEnd = this.days[this.days.length - 1][this.days[this.days.length - 1].length - 1]
 
       if (dateEnd < 0) {
-        rangeDate.dateEnd = moment(this.dataSerach).add(1, 'M').set('date', Math.abs(dateEnd)).format('YYYY-MM-DD')
+        rangeDate.dateEnd = dayjs(this.dataSerach).add(1, 'M').set('date', Math.abs(dateEnd)).format('YYYY-MM-DD')
       } else {
-        rangeDate.dateEnd = moment(this.dataSerach).set('date', Math.abs(dateEnd)).format('YYYY-MM-DD')
+        rangeDate.dateEnd = dayjs(this.dataSerach).set('date', Math.abs(dateEnd)).format('YYYY-MM-DD')
       }
       return rangeDate
     },
     getMonth () {
-      this.days = getAllDays(moment(this.dataSerach).format('YYYY'), moment(this.dataSerach).format('MM'))
+      this.days = getAllDays(dayjs(this.dataSerach).format('YYYY'), dayjs(this.dataSerach).format('MM'))
     },
     getNameMonth () {
-      return this.months[parseInt(moment(this.dataSerach).format('MM')) - 1]
+      return this.months[parseInt(dayjs(this.dataSerach).format('MM')) - 1]
     },
     async prevMonth () {
-      this.dataSerach =  moment(this.dataSerach).add(-1, 'M').format('YYYY-MM-DD')
+      this.dataSerach =  dayjs(this.dataSerach).add(-1, 'M').format('YYYY-MM-DD')
       this.getMonth()
       this.$emit('prevMonthClicked', this.getRangeDates())
       this.getRangeDates()
     },
     async nextMonth () {
-      this.dataSerach =  moment(this.dataSerach).add(1, 'M').format('YYYY-MM-DD')
+      this.dataSerach =  dayjs(this.dataSerach).add(1, 'M').format('YYYY-MM-DD')
       this.getMonth()
       this.$emit('nextMonthClicked', this.getRangeDates())
     },
@@ -160,9 +160,6 @@ export default {
     itemClicked(item) {
       this.$emit('itemClicked', item)
     },
-    formatData (data) {
-      return moment(data).format('DD/MM/YYYY')
-    },
     pad_with_zeroes(number, length) {
       let my_string = '' + number;
       while (my_string.length < length) {
@@ -171,7 +168,7 @@ export default {
       return my_string
     },
     getItemsInDay (day) {
-      return this.items.filter(i => moment(i.day).format('YYYY-MM-DD') == moment(this.dataSerach).set('date', day).format('YYYY-MM-DD'))
+      return this.items.filter(i => dayjs(i.day).format('YYYY-MM-DD') == dayjs(this.dataSerach).set('date', day).format('YYYY-MM-DD'))
     },
 
     checkDisabled (day) {
