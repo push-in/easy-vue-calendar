@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs'
 import Calendar from './components/Calendar.vue'
 
 export default {
@@ -58,7 +58,7 @@ export default {
     add () {
       this.items.push({
         title: "Test",
-        day: moment().set('date', 20).format('YYYY-MM-DD')
+        day: dayjs().set('date', 20).format('YYYY-MM-DD')
       })
     },
     dayClicked ($event) {

@@ -1,6 +1,5 @@
-const _ = require('lodash')
-let rows = _.range(0, 6)
-let cols = _.range(0, 7)
+let rows = [0, 1, 2, 3, 4, 5]
+let cols = [0, 1, 2, 3, 4, 5, 6]
 
 function getMatrix (y, m) {
   let matrix = []
@@ -8,14 +7,14 @@ function getMatrix (y, m) {
   let numDays = new Date(y, m + 1, 0).getDate()
   let dayNum
 
-  _.each(rows, function (row) {
+  rows.forEach(function (row) {
     let week = []
-    _.each(cols, function (col) {
+    cols.forEach(function (col) {
       if (row == 0) {
         dayNum = col - date.getDay() + 1
         week.push(col < date.getDay() ? -(new Date(y, m, -(date.getDay() - 1 - col)).getDate()) : dayNum)
       } else {
-        dayNum = _.last(matrix)[6] + col + 1
+        dayNum = matrix[matrix.length - 1][6] + col + 1
         week.push(dayNum <= numDays ? dayNum : -(dayNum - numDays))
       }
     });
